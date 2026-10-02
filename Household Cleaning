@@ -1,0 +1,2528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f5f2ea" />
+  <title>Household Cleaning - Eickhoffweg</title>
+
+  <style>
+    :root{
+      --bg:#f5f2ea;
+      --card:#ffffff;
+      --ink:#22251f;
+      --muted:#74786f;
+      --line:#e5e2d9;
+      --accent:#2f6f55;
+      --accent-soft:#e7f1eb;
+      --danger:#c94a4a;
+      --warning:#c68a18;
+      --bio:#36a852;
+      --paper:#3478d4;
+      --plastic:#e5b800;
+      --shadow:0 8px 30px rgba(30,35,28,.07);
+      --radius:18px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    body{
+      margin:0;
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+      line-height:1.45;
+    }
+
+    button,
+    input,
+    textarea,
+    select{
+      font:inherit;
+    }
+
+    button{
+      cursor:pointer;
+    }
+
+    .app{
+      max-width:1100px;
+      margin:0 auto;
+      padding:22px 16px 60px;
+    }
+
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:20px;
+      margin-bottom:22px;
+    }
+
+    .brand h1{
+      margin:0;
+      font-size:clamp(26px,5vw,42px);
+      letter-spacing:-1.5px;
+    }
+
+    .brand p{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .header-actions{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--ink);
+      border-radius:12px;
+      padding:10px 14px;
+      transition:.15s ease;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+      box-shadow:0 5px 15px rgba(0,0,0,.06);
+    }
+
+    .btn.primary{
+      background:var(--accent);
+      color:#fff;
+      border-color:var(--accent);
+    }
+
+    .btn.danger{
+      color:var(--danger);
+    }
+
+    .btn.small{
+      padding:7px 10px;
+      font-size:13px;
+      border-radius:9px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(12,1fr);
+      gap:16px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+
+    .span-12{grid-column:span 12;}
+    .span-8{grid-column:span 8;}
+    .span-6{grid-column:span 6;}
+    .span-4{grid-column:span 4;}
+
+    .card-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:14px;
+    }
+
+    .card-head h2{
+      margin:0;
+      font-size:18px;
+      letter-spacing:-.3px;
+    }
+
+    .muted{
+      color:var(--muted);
+    }
+
+    .tiny{
+      font-size:12px;
+    }
+
+    .section-label{
+      font-size:12px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted);
+      margin:18px 0 9px;
+    }
+
+    /* Status */
+
+    .status-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+    }
+
+    .person{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px;
+      background:#fff;
+    }
+
+    .person-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      margin-bottom:9px;
+    }
+
+    .person-name{
+      font-weight:800;
+    }
+
+    .status-pill{
+      font-size:11px;
+      font-weight:800;
+      padding:4px 8px;
+      border-radius:999px;
+    }
+
+    .status-pill.home{
+      color:#25603f;
+      background:#e7f4ec;
+    }
+
+    .status-pill.away{
+      color:#8d6416;
+      background:#fff2cf;
+    }
+
+    .person-actions{
+      display:flex;
+      gap:6px;
+    }
+
+    .person-actions button{
+      flex:1;
+      border:1px solid var(--line);
+      background:#fafafa;
+      padding:7px 6px;
+      border-radius:9px;
+      font-size:12px;
+    }
+
+    .person-actions button.active{
+      background:var(--accent-soft);
+      border-color:#a9cdbb;
+      color:#24583f;
+      font-weight:800;
+    }
+
+    /* Rota */
+
+    .week-banner{
+      background:var(--accent-soft);
+      border:1px solid #c8ded1;
+      border-radius:14px;
+      padding:12px 14px;
+      margin-bottom:12px;
+    }
+
+    .week-banner strong{
+      display:block;
+      margin-bottom:2px;
+    }
+
+    .task{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+      margin-bottom:10px;
+      background:#fff;
+    }
+
+    .task:last-child{
+      margin-bottom:0;
+    }
+
+    .task-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .task-name{
+      font-weight:800;
+      display:flex;
+      gap:9px;
+      align-items:center;
+    }
+
+    .owner{
+      color:var(--muted);
+      font-size:13px;
+      margin-top:5px;
+    }
+
+    .task-status{
+      margin-top:10px;
+      padding-top:10px;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+    }
+
+    .done-badge{
+      color:#276342;
+      background:#e8f4ed;
+      border-radius:999px;
+      padding:5px 9px;
+      font-size:11px;
+      font-weight:800;
+    }
+
+    .away-badge{
+      color:#986b14;
+      background:#fff1c8;
+      border-radius:999px;
+      padding:5px 9px;
+      font-size:11px;
+      font-weight:800;
+    }
+
+    .cover-badge{
+      color:#984848;
+      background:#fde9e9;
+      border-radius:999px;
+      padding:5px 9px;
+      font-size:11px;
+      font-weight:800;
+    }
+
+    /* Bins */
+
+    .bin-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+    }
+
+    .bin{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:13px;
+      background:#fff;
+    }
+
+    .bin-title{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-weight:800;
+      margin-bottom:8px;
+    }
+
+    .dot{
+      width:12px;
+      height:12px;
+      border-radius:50%;
+      flex:0 0 auto;
+    }
+
+    .dot.bio{background:var(--bio);}
+    .dot.paper{background:var(--paper);}
+    .dot.plastic{background:var(--plastic);}
+
+    .bin-meta{
+      font-size:12px;
+      color:var(--muted);
+      min-height:35px;
+    }
+
+    /* Notes / shopping */
+
+    .add-row{
+      display:flex;
+      gap:8px;
+      margin-bottom:12px;
+    }
+
+    .input,
+    textarea,
+    select{
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:11px;
+      padding:10px 12px;
+      background:#fff;
+      color:var(--ink);
+      outline:none;
+    }
+
+    .input:focus,
+    textarea:focus,
+    select:focus{
+      border-color:#9fc2ae;
+      box-shadow:0 0 0 3px rgba(47,111,85,.08);
+    }
+
+    textarea{
+      min-height:90px;
+      resize:vertical;
+    }
+
+    .note{
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px;
+      margin-bottom:9px;
+    }
+
+    .note:last-child{
+      margin-bottom:0;
+    }
+
+    .note-text{
+      white-space:pre-wrap;
+    }
+
+    .note-meta{
+      display:flex;
+      justify-content:space-between;
+      gap:8px;
+      color:var(--muted);
+      font-size:11px;
+      margin-top:8px;
+    }
+
+    .shopping-item{
+      display:flex;
+      align-items:center;
+      gap:9px;
+      padding:10px 0;
+      border-bottom:1px solid var(--line);
+    }
+
+    .shopping-item:last-child{
+      border-bottom:0;
+    }
+
+    .shopping-item.done .shopping-text{
+      text-decoration:line-through;
+      color:var(--muted);
+    }
+
+    .shopping-text{
+      flex:1;
+    }
+
+    .checkbox{
+      width:19px;
+      height:19px;
+      accent-color:var(--accent);
+    }
+
+    /* Calendar */
+
+    .calendar-nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      margin-bottom:12px;
+    }
+
+    .calendar-month{
+      font-weight:800;
+    }
+
+    .calendar-grid{
+      display:grid;
+      grid-template-columns:repeat(7,1fr);
+      gap:4px;
+    }
+
+    .weekday{
+      text-align:center;
+      font-size:10px;
+      font-weight:800;
+      color:var(--muted);
+      padding:5px 0;
+    }
+
+    .day{
+      min-height:52px;
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:9px;
+      padding:5px;
+      position:relative;
+      text-align:left;
+    }
+
+    .day:hover{
+      background:#fafbf9;
+    }
+
+    .day.empty{
+      background:transparent;
+      border-color:transparent;
+    }
+
+    .day.today{
+      border-color:var(--accent);
+    }
+
+    .day.selected{
+      box-shadow:inset 0 0 0 2px var(--accent);
+    }
+
+    .day-number{
+      font-size:11px;
+      font-weight:800;
+    }
+
+    .absence-dots{
+      display:flex;
+      gap:3px;
+      flex-wrap:wrap;
+      margin-top:6px;
+    }
+
+    .absence-dot{
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:#e5a623;
+    }
+
+    .selected-date{
+      margin-top:12px;
+      padding:12px;
+      border-radius:12px;
+      background:#faf9f4;
+      border:1px solid var(--line);
+    }
+
+    .absence-list{
+      margin-top:10px;
+    }
+
+    .absence{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:flex-start;
+      padding:10px 0;
+      border-bottom:1px solid var(--line);
+    }
+
+    .absence:last-child{
+      border-bottom:0;
+    }
+
+    .absence-name{
+      font-weight:800;
+    }
+
+    /* Tally */
+
+    .tally-row{
+      display:grid;
+      grid-template-columns:100px 1fr 45px;
+      align-items:center;
+      gap:10px;
+      margin-bottom:10px;
+    }
+
+    .bar{
+      height:10px;
+      background:#eee;
+      border-radius:999px;
+      overflow:hidden;
+    }
+
+    .bar-fill{
+      height:100%;
+      background:var(--accent);
+      border-radius:999px;
+    }
+
+    /* Connection */
+
+    .connection{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .connection-dot{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:#aaa;
+    }
+
+    .connection-dot.online{
+      background:#36a852;
+    }
+
+    .connection-dot.error{
+      background:#c94a4a;
+    }
+
+    /* Modal */
+
+    .modal-backdrop{
+      position:fixed;
+      inset:0;
+      background:rgba(20,24,20,.45);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:1000;
+    }
+
+    .modal-backdrop.open{
+      display:flex;
+    }
+
+    .modal{
+      width:min(620px,100%);
+      max-height:90vh;
+      overflow:auto;
+      background:#fff;
+      border-radius:20px;
+      padding:20px;
+      box-shadow:0 25px 80px rgba(0,0,0,.2);
+    }
+
+    .modal-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin-bottom:15px;
+    }
+
+    .modal-head h2{
+      margin:0;
+      font-size:21px;
+    }
+
+    .close{
+      border:0;
+      background:#f1f1ed;
+      width:36px;
+      height:36px;
+      border-radius:50%;
+      font-size:20px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    .form-group{
+      margin-bottom:11px;
+    }
+
+    .form-group.full{
+      grid-column:1/-1;
+    }
+
+    .form-group label{
+      display:block;
+      font-size:12px;
+      font-weight:800;
+      margin-bottom:5px;
+    }
+
+    .modal-actions{
+      display:flex;
+      justify-content:flex-end;
+      gap:8px;
+      margin-top:14px;
+    }
+
+    /* Setup */
+
+    .setup{
+      max-width:700px;
+      margin:60px auto;
+    }
+
+    .setup h1{
+      margin-top:0;
+    }
+
+    .setup-box{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:24px;
+      box-shadow:var(--shadow);
+    }
+
+    .setup-help{
+      background:#f7f8f5;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px;
+      margin:15px 0;
+      font-size:13px;
+    }
+
+    .error-box{
+      background:#fff0f0;
+      color:#8f3f3f;
+      border:1px solid #f0c6c6;
+      border-radius:12px;
+      padding:12px;
+      margin-bottom:12px;
+      display:none;
+      white-space:pre-wrap;
+    }
+
+    .room-link{
+      display:flex;
+      gap:8px;
+      margin-top:8px;
+    }
+
+    .room-link input{
+      flex:1;
+    }
+
+    footer{
+      margin-top:20px;
+      text-align:center;
+      color:var(--muted);
+      font-size:11px;
+    }
+
+    @media(max-width:850px){
+      .span-8,
+      .span-6,
+      .span-4{
+        grid-column:span 12;
+      }
+    }
+
+    @media(max-width:650px){
+      header{
+        flex-direction:column;
+      }
+
+      .header-actions{
+        justify-content:flex-start;
+      }
+
+      .status-grid{
+        grid-template-columns:1fr;
+      }
+
+      .bin-grid{
+        grid-template-columns:1fr;
+      }
+
+      .form-grid{
+        grid-template-columns:1fr;
+      }
+
+      .tally-row{
+        grid-template-columns:80px 1fr 35px;
+      }
+
+      .calendar-grid{
+        gap:2px;
+      }
+
+      .day{
+        min-height:45px;
+      }
+
+      .app{
+        padding:15px 10px 45px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="setupView" class="setup" style="display:none;">
+  <div class="setup-box">
+    <h1>🏠 Household Cleaning</h1>
+    <p class="muted">Eickhoffweg · Bella · Melody · Lohans</p>
+
+    <div class="setup-help">
+      <strong>One-time setup</strong><br>
+      Paste your Firebase Realtime Database URL below.
+      It normally looks like
+      <code>https://your-project-default-rtdb.europe-west1.firebasedatabase.app</code>.
+      Your household data will be stored inside a private room ID.
+    </div>
+
+    <div id="setupError" class="error-box"></div>
+
+    <div class="form-group">
+      <label>Firebase Realtime Database URL</label>
+      <input
+        id="firebaseUrl"
+        class="input"
+        placeholder="https://your-project-default-rtdb.europe-west1.firebasedatabase.app"
+      />
+    </div>
+
+    <button class="btn primary" onclick="saveSetup()">
+      Create household
+    </button>
+  </div>
+</div>
+
+<div id="appView" style="display:none;">
+  <div class="app">
+
+    <header>
+      <div class="brand">
+        <h1>🏠 Household Cleaning</h1>
+        <p>Eickhoffweg · Bella · Melody · Lohans</p>
+      </div>
+
+      <div class="header-actions">
+        <button class="btn" onclick="openCalendar()">
+          📅 Calendar
+        </button>
+
+        <button class="btn" onclick="openSettings()">
+          ⚙️ Room
+        </button>
+
+        <div class="connection">
+          <span id="connectionDot" class="connection-dot"></span>
+          <span id="connectionText">Connecting…</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="grid">
+
+      <!-- PEOPLE -->
+      <section class="card span-12">
+        <div class="card-head">
+          <h2>👋 Who's around?</h2>
+          <span class="muted tiny" id="todayLabel"></span>
+        </div>
+
+        <div id="peopleGrid" class="status-grid"></div>
+      </section>
+
+      <!-- CURRENT WEEK -->
+      <section class="card span-8">
+        <div class="card-head">
+          <h2>🧹 This week's cleaning</h2>
+        </div>
+
+        <div id="weekBanner" class="week-banner"></div>
+        <div id="currentTasks"></div>
+      </section>
+
+      <!-- NEXT WEEK -->
+      <section class="card span-4">
+        <div class="card-head">
+          <h2>➡️ Next week</h2>
+        </div>
+
+        <div id="nextTasks"></div>
+      </section>
+
+      <!-- BINS -->
+      <section class="card span-12">
+        <div class="card-head">
+          <h2>🗑️ Bins</h2>
+          <span class="muted tiny">Tap when taken out</span>
+        </div>
+
+        <div id="bins" class="bin-grid"></div>
+      </section>
+
+      <!-- CALENDAR -->
+      <section class="card span-8">
+        <div class="card-head">
+          <h2>📅 Absence plan</h2>
+          <button class="btn small" onclick="openCalendar()">Open calendar</button>
+        </div>
+
+        <div id="upcomingAbsences"></div>
+      </section>
+
+      <!-- NOTES -->
+      <section class="card span-4">
+        <div class="card-head">
+          <h2>📝 Notiz</h2>
+        </div>
+
+        <textarea
+          id="noteText"
+          placeholder="e.g. Bella away from 10–15 October. Please cover bathroom…"
+        ></textarea>
+
+        <div style="display:flex;gap:8px;margin-top:8px;">
+          <select id="noteAuthor" class="input">
+            <option value="Bella">Bella</option>
+            <option value="Melody">Melody</option>
+            <option value="Lohans">Lohans</option>
+          </select>
+
+          <button class="btn primary" onclick="addNote()">Add</button>
+        </div>
+
+        <div style="margin-top:15px;" id="notes"></div>
+      </section>
+
+      <!-- SHOPPING -->
+      <section class="card span-6">
+        <div class="card-head">
+          <h2>🛒 Shopping needs</h2>
+        </div>
+
+        <div class="add-row">
+          <input
+            id="shoppingText"
+            class="input"
+            placeholder="e.g. dishwasher tablets"
+            onkeydown="if(event.key==='Enter') addShopping()"
+          />
+          <button class="btn primary" onclick="addShopping()">Add</button>
+        </div>
+
+        <div id="shopping"></div>
+      </section>
+
+      <!-- TALLY -->
+      <section class="card span-6">
+        <div class="card-head">
+          <h2>📊 8-week overview</h2>
+          <span class="muted tiny">Completed cleaning tasks</span>
+        </div>
+
+        <div id="tally"></div>
+      </section>
+
+    </div>
+
+    <footer>
+      Household Cleaning - Eickhoffweg · Shared household dashboard
+    </footer>
+
+  </div>
+</div>
+
+
+<!-- CALENDAR MODAL -->
+<div id="calendarModal" class="modal-backdrop">
+  <div class="modal">
+
+    <div class="modal-head">
+      <h2>📅 Calendar & absences</h2>
+      <button class="close" onclick="closeModal('calendarModal')">×</button>
+    </div>
+
+    <div class="calendar-nav">
+      <button class="btn small" onclick="changeMonth(-1)">←</button>
+      <div id="calendarMonth" class="calendar-month"></div>
+      <button class="btn small" onclick="changeMonth(1)">→</button>
+    </div>
+
+    <div id="calendarGrid" class="calendar-grid"></div>
+
+    <div id="selectedDateBox" class="selected-date"></div>
+
+    <div class="section-label">Plan an absence</div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Person</label>
+        <select id="absencePerson">
+          <option>Bella</option>
+          <option>Melody</option>
+          <option>Lohans</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Note</label>
+        <input id="absenceNote" class="input" placeholder="Holiday, away, work trip…" />
+      </div>
+
+      <div class="form-group">
+        <label>Start</label>
+        <input id="absenceStart" type="date" class="input" />
+      </div>
+
+      <div class="form-group">
+        <label>End</label>
+        <input id="absenceEnd" type="date" class="input" />
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal('calendarModal')">Cancel</button>
+      <button class="btn primary" onclick="saveAbsence()">Save absence</button>
+    </div>
+
+    <div class="section-label">Planned absences</div>
+    <div id="allAbsences"></div>
+
+  </div>
+</div>
+
+
+<!-- ROOM SETTINGS MODAL -->
+<div id="settingsModal" class="modal-backdrop">
+  <div class="modal">
+
+    <div class="modal-head">
+      <h2>⚙️ Household room</h2>
+      <button class="close" onclick="closeModal('settingsModal')">×</button>
+    </div>
+
+    <p class="muted">
+      Share this link with Bella, Melody and Lohans.
+      Everyone using the same link sees the same household data.
+    </p>
+
+    <div class="section-label">Private household link</div>
+
+    <div class="room-link">
+      <input id="shareLink" class="input" readonly />
+      <button class="btn primary" onclick="copyShareLink()">Copy</button>
+    </div>
+
+    <div class="setup-help" style="margin-top:15px;">
+      <strong>Important:</strong>
+      The room ID is your household's shared key.
+      Anyone who has the full link can access that room.
+      Do not put sensitive personal information into the app.
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn danger" onclick="resetLocalRoom()">
+        Reset this device
+      </button>
+      <button class="btn" onclick="closeModal('settingsModal')">
+        Done
+      </button>
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+/* =========================================================
+   HOUSEHOLD CLEANING - EICKWEGWEG
+   Firebase Realtime Database REST version
+   ========================================================= */
+
+const PEOPLE = ["Bella", "Melody", "Lohans"];
+
+const TASKS = [
+  ["bath", "🛁 Bathroom"],
+  ["kit", "🍽️ Kitchen"],
+  ["floor", "🧽 Floors"]
+];
+
+const BINS = [
+  ["bio", "🟢 Bio", "bio"],
+  ["paper", "🔵 Paper", "paper"],
+  ["plastic", "🟡 Plastic", "plastic"]
+];
+
+/*
+  Rotation is deliberately simple:
+  Week 0:
+    Bella   Bathroom
+    Melody  Kitchen
+    Lohans  Floors
+
+  Week 1:
+    Melody  Bathroom
+    Lohans  Kitchen
+    Bella   Floors
+
+  Week 2:
+    Lohans  Bathroom
+    Bella   Kitchen
+    Melody  Floors
+
+  Then it repeats.
+*/
+
+const ROTATION_START = new Date(2026, 8, 28); // Monday 28 Sep 2026
+
+let CFG = null;
+
+let STATE = {
+  done: {},
+  away: {},
+  bins: {},
+  absences: {},
+  notes: {},
+  shopping: {}
+};
+
+let calendarDate = new Date();
+let selectedCalendarDate = todayKey();
+
+let pollTimer = null;
+let firstLoad = true;
+
+
+/* =========================================================
+   INIT
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+  const saved = localStorage.getItem("household_cleaning_config");
+
+  if (saved) {
+    try {
+      CFG = JSON.parse(saved);
+    } catch {
+      CFG = null;
+    }
+  }
+
+  const hash = new URLSearchParams(location.hash.slice(1));
+
+  const hashDb = hash.get("d");
+  const hashRoom = hash.get("r");
+
+  if (hashDb && hashRoom) {
+    CFG = {
+      d: decodeURIComponent(hashDb),
+      r: hashRoom
+    };
+
+    localStorage.setItem(
+      "household_cleaning_config",
+      JSON.stringify(CFG)
+    );
+  }
+
+  if (!CFG || !CFG.d || !CFG.r) {
+    showSetup();
+  } else {
+    startApp();
+  }
+});
+
+
+/* =========================================================
+   SETUP
+   ========================================================= */
+
+function showSetup() {
+  document.getElementById("setupView").style.display = "block";
+  document.getElementById("appView").style.display = "none";
+}
+
+function saveSetup() {
+  const input = document.getElementById("firebaseUrl");
+  const error = document.getElementById("setupError");
+
+  let url = input.value.trim();
+
+  if (!url) {
+    error.textContent = "Please enter your Firebase Realtime Database URL.";
+    error.style.display = "block";
+    return;
+  }
+
+  url = url.replace(/\/+$/, "");
+
+  if (!/^https:\/\/.+/i.test(url)) {
+    error.textContent =
+      "The Firebase URL should start with https://";
+    error.style.display = "block";
+    return;
+  }
+
+  CFG = {
+    d: url,
+    r: randomRoomId()
+  };
+
+  localStorage.setItem(
+    "household_cleaning_config",
+    JSON.stringify(CFG)
+  );
+
+  updateHash();
+
+  startApp();
+}
+
+function randomRoomId() {
+  const chars =
+    "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+  let out = "";
+
+  for (let i = 0; i < 12; i++) {
+    out += chars[Math.floor(Math.random() * chars.length)];
+  }
+
+  return out;
+}
+
+function updateHash() {
+  location.hash =
+    "d=" +
+    encodeURIComponent(CFG.d) +
+    "&r=" +
+    encodeURIComponent(CFG.r);
+}
+
+
+/* =========================================================
+   FIREBASE
+   ========================================================= */
+
+function firebasePath(path = "") {
+  return (
+    CFG.d.replace(/\/+$/, "") +
+    "/rooms/" +
+    encodeURIComponent(CFG.r) +
+    (path ? "/" + path : "") +
+    ".json"
+  );
+}
+
+async function firebaseRequest(path, options = {}) {
+  const response = await fetch(firebasePath(path), {
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...(options.headers || {})
+    }
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+
+    throw new Error(
+      "Firebase " +
+      response.status +
+      ": " +
+      text
+    );
+  }
+
+  return response.json();
+}
+
+async function firebaseSet(path, value) {
+  return firebaseRequest(path, {
+    method: "PUT",
+    body: JSON.stringify(value)
+  });
+}
+
+async function firebasePatch(path, value) {
+  return firebaseRequest(path, {
+    method: "PATCH",
+    body: JSON.stringify(value)
+  });
+}
+
+async function firebaseDelete(path) {
+  return firebaseRequest(path, {
+    method: "DELETE"
+  });
+}
+
+
+/* =========================================================
+   APP START
+   ========================================================= */
+
+function startApp() {
+  document.getElementById("setupView").style.display = "none";
+  document.getElementById("appView").style.display = "block";
+
+  document.getElementById("todayLabel").textContent =
+    formatDateLong(new Date());
+
+  renderEverything();
+
+  loadFirebase();
+
+  if (pollTimer) {
+    clearInterval(pollTimer);
+  }
+
+  pollTimer = setInterval(loadFirebase, 5000);
+}
+
+async function loadFirebase() {
+  try {
+    setConnection("loading");
+
+    const data = await firebaseRequest("");
+
+    if (data && typeof data === "object") {
+      STATE.done = data.done || {};
+      STATE.away = data.away || {};
+      STATE.bins = data.bins || {};
+      STATE.absences = data.absences || {};
+      STATE.notes = data.notes || {};
+      STATE.shopping = data.shopping || {};
+    }
+
+    setConnection("online");
+
+    renderEverything();
+
+    if (firstLoad) {
+      firstLoad = false;
+      initialiseDefaults();
+    }
+
+  } catch (error) {
+    console.error(error);
+    setConnection("error");
+
+    showFirebaseError(error);
+  }
+}
+
+function setConnection(type) {
+  const dot = document.getElementById("connectionDot");
+  const text = document.getElementById("connectionText");
+
+  dot.className = "connection-dot";
+
+  if (type === "online") {
+    dot.classList.add("online");
+    text.textContent = "Synced";
+  }
+
+  if (type === "loading") {
+    text.textContent = "Syncing…";
+  }
+
+  if (type === "error") {
+    dot.classList.add("error");
+    text.textContent = "Connection problem";
+  }
+}
+
+function showFirebaseError(error) {
+  console.error(error);
+}
+
+
+/* =========================================================
+   DEFAULTS
+   ========================================================= */
+
+async function initialiseDefaults() {
+  const patch = {};
+
+  for (const p of PEOPLE) {
+    if (!(p in STATE.away)) {
+      patch["away/" + safeKey(p)] = false;
+    }
+  }
+
+  if (Object.keys(patch).length) {
+    try {
+      await firebasePatch("", patch);
+      await loadFirebase();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
+
+function safeKey(value) {
+  return encodeURIComponent(value);
+}
+
+
+/* =========================================================
+   DATE HELPERS
+   ========================================================= */
+
+function dateKey(date) {
+  const d = new Date(date);
+
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+
+  return `${y}-${m}-${day}`;
+}
+
+function todayKey() {
+  return dateKey(new Date());
+}
+
+function parseDate(key) {
+  const [y, m, d] = key.split("-").map(Number);
+  return new Date(y, m - 1, d);
+}
+
+function formatDate(date) {
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric"
+  }).format(date);
+}
+
+function formatDateLong(date) {
+  return new Intl.DateTimeFormat("en-GB", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  }).format(date);
+}
+
+function mondayOf(date) {
+  const d = new Date(date);
+  const day = d.getDay();
+  const diff = day === 0 ? -6 : 1 - day;
+
+  d.setDate(d.getDate() + diff);
+  d.setHours(0,0,0,0);
+
+  return d;
+}
+
+function addDays(date, amount) {
+  const d = new Date(date);
+  d.setDate(d.getDate() + amount);
+  return d;
+}
+
+function weekIndex(date) {
+  const currentMonday = mondayOf(date);
+  const startMonday = mondayOf(ROTATION_START);
+
+  return Math.floor(
+    (currentMonday - startMonday) /
+    (7 * 24 * 60 * 60 * 1000)
+  );
+}
+
+function weekAssignments(date) {
+  const index = ((weekIndex(date) % PEOPLE.length) + PEOPLE.length) % PEOPLE.length;
+
+  const assignments = {};
+
+  TASKS.forEach((task, taskIndex) => {
+    assignments[task[0]] =
+      PEOPLE[(taskIndex + index) % PEOPLE.length];
+  });
+
+  return assignments;
+}
+
+function weekKey(date) {
+  return dateKey(mondayOf(date));
+}
+
+function dueDateForWeek(date) {
+  return addDays(mondayOf(date), 6);
+}
+
+
+/* =========================================================
+   ABSENCE LOGIC
+   ========================================================= */
+
+function absenceRecords() {
+  return Object.entries(STATE.absences || {}).map(([id, item]) => ({
+    id,
+    ...item
+  }));
+}
+
+function isPlannedAway(person, date) {
+  const key = dateKey(date);
+
+  return absenceRecords().some(a => {
+    if (a.person !== person) return false;
+    if (!a.start || !a.end) return false;
+
+    return key >= a.start && key <= a.end;
+  });
+}
+
+function isAway(person, date = new Date()) {
+  return (
+    isPlannedAway(person, date) ||
+    STATE.away?.[person] === true
+  );
+}
+
+function absenceForPersonOnDate(person, date) {
+  return absenceRecords().find(a => {
+    if (a.person !== person) return false;
+    if (!a.start || !a.end) return false;
+
+    const key = dateKey(date);
+
+    return key >= a.start && key <= a.end;
+  });
+}
+
+
+/* =========================================================
+   RENDER EVERYTHING
+   ========================================================= */
+
+function renderEverything() {
+  renderPeople();
+  renderCurrentWeek();
+  renderNextWeek();
+  renderBins();
+  renderUpcomingAbsences();
+  renderNotes();
+  renderShopping();
+  renderTally();
+
+  if (
+    document.getElementById("calendarModal").classList.contains("open")
+  ) {
+    renderCalendar();
+  }
+}
+
+
+/* =========================================================
+   PEOPLE
+   ========================================================= */
+
+function renderPeople() {
+  const container = document.getElementById("peopleGrid");
+  const today = new Date();
+
+  container.innerHTML = PEOPLE.map(person => {
+    const planned = isPlannedAway(person, today);
+    const manual = STATE.away?.[person] === true;
+    const away = planned || manual;
+
+    let statusText = away ? "Away" : "Home";
+
+    if (planned) {
+      statusText = "Away · planned";
+    }
+
+    return `
+      <div class="person">
+        <div class="person-top">
+          <span class="person-name">${escapeHtml(person)}</span>
+          <span class="status-pill ${away ? "away" : "home"}">
+            ${statusText}
+          </span>
+        </div>
+
+        <div class="person-actions">
+          <button
+            class="${!away ? "active" : ""}"
+            onclick="setAway('${person}', false)"
+          >
+            🏠 Home
+          </button>
+
+          <button
+            class="${manual && !planned ? "active" : ""}"
+            onclick="setAway('${person}', true)"
+          >
+            ✈️ Away
+          </button>
+        </div>
+
+        ${
+          planned
+          ? `
+            <div class="tiny muted" style="margin-top:8px;">
+              ${escapeHtml(
+                formatAbsenceRange(
+                  absenceForPersonOnDate(person, today)
+                )
+              )}
+            </div>
+          `
+          : ""
+        }
+      </div>
+    `;
+  }).join("");
+}
+
+async function setAway(person, value) {
+  try {
+    STATE.away[person] = value;
+    renderEverything();
+
+    await firebaseSet(
+      "away/" + safeKey(person),
+      value
+    );
+
+  } catch (error) {
+    console.error(error);
+    await loadFirebase();
+    alert("Could not update the household status.");
+  }
+}
+
+
+/* =========================================================
+   CLEANING TASKS
+   ========================================================= */
+
+function renderCurrentWeek() {
+  const now = new Date();
+  const monday = mondayOf(now);
+  const sunday = dueDateForWeek(now);
+
+  const assignments = weekAssignments(now);
+
+  document.getElementById("weekBanner").innerHTML = `
+    <strong>${formatDate(monday)} – ${formatDate(sunday)}</strong>
+    <span class="tiny muted">
+      Tasks are due by Sunday evening.
+    </span>
+  `;
+
+  const container = document.getElementById("currentTasks");
+
+  container.innerHTML = TASKS.map(task => {
+    const owner = assignments[task[0]];
+    return taskHtml(task, owner, now);
+  }).join("");
+}
+
+function renderNextWeek() {
+  const next = addDays(mondayOf(new Date()), 7);
+  const assignments = weekAssignments(next);
+
+  const container = document.getElementById("nextTasks");
+
+  container.innerHTML = TASKS.map(task => {
+    const owner = assignments[task[0]];
+
+    return `
+      <div class="task">
+        <div class="task-top">
+          <div class="task-name">
+            ${escapeHtml(task[1])}
+          </div>
+        </div>
+
+        <div class="owner">
+          ${escapeHtml(owner)}
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function taskHtml(task, owner, date) {
+  const wKey = weekKey(date);
+  const done = !!STATE.done?.[wKey]?.[task[0]];
+
+  const due = dueDateForWeek(date);
+  const away = isAway(owner, due);
+
+  let badge = "";
+
+  if (done) {
+    badge = `<span class="done-badge">✓ Done</span>`;
+  } else if (away) {
+    badge = `<span class="cover-badge">⚠ Cover needed</span>`;
+  } else {
+    badge = `<span class="away-badge">Open</span>`;
+  }
+
+  return `
+    <div class="task">
+      <div class="task-top">
+        <div>
+          <div class="task-name">
+            ${escapeHtml(task[1])}
+          </div>
+
+          <div class="owner">
+            ${escapeHtml(owner)}
+            ${
+              away
+              ? " · away for the due date"
+              : ""
+            }
+          </div>
+        </div>
+
+        ${badge}
+      </div>
+
+      <div class="task-status">
+        <span class="tiny muted">
+          Due ${formatDate(due)}
+        </span>
+
+        <button
+          class="btn small ${done ? "primary" : ""}"
+          onclick="toggleTask('${wKey}','${task[0]}')"
+        >
+          ${done ? "✓ Completed" : "Mark done"}
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+async function toggleTask(wKey, taskId) {
+  const current = !!STATE.done?.[wKey]?.[taskId];
+  const next = !current;
+
+  if (!STATE.done[wKey]) {
+    STATE.done[wKey] = {};
+  }
+
+  STATE.done[wKey][taskId] = next;
+
+  renderEverything();
+
+  try {
+    await firebaseSet(
+      "done/" +
+      encodeURIComponent(wKey) +
+      "/" +
+      encodeURIComponent(taskId),
+      next
+    );
+  } catch (error) {
+    console.error(error);
+    await loadFirebase();
+    alert("Could not save the cleaning task.");
+  }
+}
+
+
+/* =========================================================
+   BINS
+   ========================================================= */
+
+function renderBins() {
+  const container = document.getElementById("bins");
+
+  container.innerHTML = BINS.map(bin => {
+    const [id, label, cssClass] = bin;
+
+    const entries = Object.values(STATE.bins?.[id] || {})
+      .filter(Boolean)
+      .sort((a,b) => (b.time || 0) - (a.time || 0));
+
+    const latest = entries[0];
+
+    return `
+      <div class="bin">
+        <div class="bin-title">
+          <span class="dot ${cssClass}"></span>
+          ${escapeHtml(label.replace(/^.\s*/, ""))}
+        </div>
+
+        <div class="bin-meta">
+          ${
+            latest
+            ? `Last taken out by ${escapeHtml(latest.by || "someone")}
+               · ${formatTimestamp(latest.time)}`
+            : "No record yet"
+          }
+        </div>
+
+        <button
+          class="btn small"
+          style="margin-top:10px;"
+          onclick="takeBin('${id}')"
+        >
+          ✓ Taken out
+        </button>
+      </div>
+    `;
+  }).join("");
+}
+
+async function takeBin(binId) {
+  const who = await choosePerson("Who took the bin out?");
+
+  if (!who) return;
+
+  const id =
+    Date.now().toString(36) +
+    Math.random().toString(36).slice(2,7);
+
+  const item = {
+    by: who,
+    time: Date.now()
+  };
+
+  if (!STATE.bins[binId]) {
+    STATE.bins[binId] = {};
+  }
+
+  STATE.bins[binId][id] = item;
+
+  renderEverything();
+
+  try {
+    await firebaseSet(
+      "bins/" +
+      encodeURIComponent(binId) +
+      "/" +
+      encodeURIComponent(id),
+      item
+    );
+  } catch (error) {
+    console.error(error);
+    await loadFirebase();
+    alert("Could not save the bin entry.");
+  }
+}
+
+
+/* =========================================================
+   NOTES
+   ========================================================= */
+
+function renderNotes() {
+  const container = document.getElementById("notes");
+
+  const notes = Object.entries(STATE.notes || {})
+    .map(([id, note]) => ({
+      id,
+      ...note
+    }))
+    .sort((a,b) => (b.time || 0) - (a.time || 0))
+    .slice(0, 10);
+
+  if (!notes.length) {
+    container.innerHTML = `
+      <div class="muted tiny">
+        No notes yet.
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = notes.map(note => `
+    <div class="note">
+      <div class="note-text">${escapeHtml(note.text || "")}</div>
+
+      <div class="note-meta">
+        <span>
+          ${escapeHtml(note.by || "Household")}
+          · ${formatTimestamp(note.time)}
+        </span>
+
+        <button
+          class="btn small danger"
+          onclick="deleteNote('${escapeHtml(note.id)}')"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  `).join("");
+}
+
+async function addNote() {
+  const input = document.getElementById("noteText");
+  const author = document.getElementById("noteAuthor");
+
+  const text = input.value.trim();
+
+  if (!text) return;
+
+  const id =
+    Date.now().toString(36) +
+    Math.random().toString(36).slice(2,7);
+
+  const note = {
+    text,
+    by: author.value,
+    time: Date.now()
+  };
+
+  STATE.notes[id] = note;
+
+  input.value = "";
+
+  renderEverything();
+
+  try {
+    await firebaseSet(
+      "notes/" + encodeURIComponent(id),
+      note
+    );
+  } catch (error) {
+    console.error(error);
+    await loadFirebase();
+    alert("Could not save the note.");
+  }
+}
+
+async function deleteNote(id) {
+  if (!confirm("Delete this note?")) return;
+
+  delete STATE.notes[id];
+
+  renderEverything();
+
+  try {
+    await firebaseDelete(
+      "notes/" + encodeURIComponent(id)
+    );
+  } catch (error) {
+    console.error(error);
+    await loadFirebase();
+  }
+}
+
+
+/* =========================================================
+   SHOPPING
+   ========================================================= */
+
+function renderShopping() {
+  const container = document.getElementById("shopping");
+
+  const items = Object.entries(STATE.shopping || {})
+    .map(([id, item]) => ({
+      id,
+      ...item
+    }))
+    .sort((a,b) => (a.done === b.done ? (b.time || 0) - (a.time || 0) : a.done ? 1 : -1));
+
+  if (!items.length) {
+    container.innerHTML = `
+      <div class="muted tiny">
+        Nothing on the shopping list.
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = items.map(item => `
+    <div class="shopping-item ${item.done ? "done" : ""}">
+      <input
+        class="checkbox"
+        type="checkbox"
+        ${item.done ? "checked" : ""}
+        onchange="toggleShopping('${escapeHtml(item.id)}', this.checked)"
+      />
+
+      <span class="shopping-text">
+        ${escapeHtml(item.text || "")}
+      </span>
+
+      <button
+        class="btn small danger"
+        onclick="deleteShopping('${escapeHtml(item.id)}')"
+      >
+        ×
+      </button>
+    </div>
+  `).join("");
+}
+
+async function addShopping() {
+  const input = document.getElementById("shoppingText");
+
+  const text = input.value.trim();
+
+  if (!text) return;
+
+  const id =
+    Date.now().toString(36) +
+    Math.random().toString(36).slice(2,7);
+
+  const item = {
+    text,
+    done:false,
+    time:Date.now()
+  };
+
+  STATE.shopping[id] = item;
+
+  input.value = "";
+
+  renderEverything();
+
+  try {
+    await firebaseSet(
+      "shopping/" + encodeURIComponent(id),
+      item
+    );
+  } catch (error) {
+    console.error(error);
+    await loadFirebase();
+    alert("Could not save the shopping item.");
+  }
+}
+
+async function toggleShopping(id, value) {
+  if (!STATE.shopping[id]) return;
+
+  STATE.shopping[id].done = value;
+
+  renderEverything();
+
+  try {
+    await firebaseSet(
+      "shopping/" + encodeURIComponent(id) + "/done",
+      value
+    );
+  } catch (error) {
+    console.error(error);
+    await loadFirebase();
+  }
+}
+
+async function deleteShopping(id) {
+  delete STATE.shopping[id];
+
+  renderEverything();
+
+  try {
+    await firebaseDelete(
+      "shopping/" + encodeURIComponent(id)
+    );
+  } catch (error) {
+    console.error(error);
+    await loadFirebase();
+  }
+}
+
+
+/* =========================================================
+   CALENDAR
+   ========================================================= */
+
+function openCalendar() {
+  document.getElementById("calendarModal").classList.add("open");
+
+  const selected = parseDate(selectedCalendarDate);
+
+  calendarDate = new Date(
+    selected.getFullYear(),
+    selected.getMonth(),
+    1
+  );
+
+  renderCalendar();
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove("open");
+}
+
+function changeMonth(amount) {
+  calendarDate.setMonth(calendarDate.getMonth() + amount);
+  renderCalendar();
+}
+
+function renderCalendar() {
+  const monthName = new Intl.DateTimeFormat("en-GB", {
+    month:"long",
+    year:"numeric"
+  }).format(calendarDate);
+
+  document.getElementById("calendarMonth").textContent =
+    monthName;
+
+  const container = document.getElementById("calendarGrid");
+
+  const weekdays = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+
+  let html = weekdays
+    .map(day => `<div class="weekday">${day}</div>`)
+    .join("");
+
+  const first = new Date(
+    calendarDate.getFullYear(),
+    calendarDate.getMonth(),
+    1
+  );
+
+  const last = new Date(
+    calendarDate.getFullYear(),
+    calendarDate.getMonth() + 1,
+    0
+  );
+
+  let mondayIndex = first.getDay() - 1;
+
+  if (mondayIndex < 0) {
+    mondayIndex = 6;
+  }
+
+  for (let i = 0; i < mondayIndex; i++) {
+    html += `<div class="day empty"></div>`;
+  }
+
+  for (let day = 1; day <= last.getDate(); day++) {
+    const date = new Date(
+      calendarDate.getFullYear(),
+      calendarDate.getMonth(),
+      day
+    );
+
+    const key = dateKey(date);
+
+    const peopleAway = PEOPLE.filter(
+      p => isPlannedAway(p, date)
+    );
+
+    const isToday = key === todayKey();
+    const selected = key === selectedCalendarDate;
+
+    html += `
+      <button
+        class="day
+          ${isToday ? "today" : ""}
+          ${selected ? "selected" : ""}
+        "
+        onclick="selectCalendarDate('${key}')"
+      >
+        <div class="day-number">${day}</div>
+
+        <div class="absence-dots">
+          ${peopleAway.map(() =>
+            `<span class="absence-dot"></span>`
+          ).join("")}
+        </div>
+      </button>
+    `;
+  }
+
+  container.innerHTML = html;
+
+  renderSelectedCalendarDate();
+  renderAbsenceList();
+}
+
+function selectCalendarDate(key) {
+  selectedCalendarDate = key;
+
+  const d = parseDate(key);
+
+  document.getElementById("absenceStart").value = key;
+  document.getElementById("absenceEnd").value = key;
+
+  calendarDate = new Date(
+    d.getFullYear(),
+    d.getMonth(),
+    1
+  );
+
+  renderCalendar();
+}
+
+function renderSelectedCalendarDate() {
+  const container =
+    document.getElementById("selectedDateBox");
+
+  const date = parseDate(selectedCalendarDate);
+
+  const peopleAway = PEOPLE.filter(
+    p => isPlannedAway(p, date)
+  );
+
+  if (!peopleAway.length) {
+    container.innerHTML = `
+      <strong>${formatDateLong(date)}</strong>
+      <div class="tiny muted" style="margin-top:4px;">
+        Everyone is currently planned as available.
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = `
+    <strong>${formatDateLong(date)}</strong>
+
+    <div style="margin-top:8px;">
+      ${peopleAway.map(person => `
+        <div style="margin-bottom:5px;">
+          ✈️ <strong>${escapeHtml(person)}</strong> is away
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
+
+function renderAbsenceList() {
+  const container =
+    document.getElementById("allAbsences");
+
+  const absences = absenceRecords()
+    .sort((a,b) => (a.start || "").localeCompare(b.start || ""));
+
+  if (!absences.length) {
+    container.innerHTML = `
+      <div class="muted tiny">
+        No planned absences.
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = absences.map(a => `
+    <div class="absence">
+      <div>
+        <div class="absence-name">
+          ✈️ ${escapeHtml(a.person)}
+        </div>
+
+        <div class="tiny muted">
+          ${escapeHtml(formatAbsenceRange(a))}
+          ${
+            a.note
+            ? " · " + escapeHtml(a.note)
+            : ""
+          }
+        </div>
+      </div>
+
+      <button
+        class="btn small danger"
+        onclick="deleteAbsence('${escapeHtml(a.id)}')"
+      >
+        Delete
+      </button>
+    </div>
+  `).join("");
+}
+
+function formatAbsenceRange(a) {
+  if (!a) return "";
+
+  const start = parseDate(a.start);
+  const end = parseDate(a.end);
+
+  if (a.start === a.end) {
+    return formatDate(start);
+  }
+
+  return `${formatDate(start)} – ${formatDate(end)}`;
+}
+
+async function saveAbsence() {
+  const person =
+    document.getElementById("absencePerson").value;
+
+  const start =
+    document.getElementById("absenceStart").value;
+
+  const end =
+    document.getElementById("absenceEnd").value;
+
+  const note =
+    document.getElementById("absenceNote").value.trim();
+
+  if (!start || !end) {
+    alert("Please select a start and end date.");
+    return;
+  }
+
+  if (end < start) {
+    alert("The end date cannot be before the start date.");
+    return;
+  }
+
+  const id =
+    Date.now().toString(36) +
+    Math.random().toString(36).slice(2,7);
+
+  const absence = {
+    person,
+    start,
+    end,
+    note,
+    created: Date.now()
+  };
+
+  STATE.absences[id] = absence;
+
+  document.getElementById("absenceNote").value = "";
+
+  renderEverything();
+  renderCalendar();
+
+  try {
+    await firebaseSet(
+      "absences/" + encodeURIComponent(id),
+      absence
+    );
+  } catch (error) {
+    console.error(error);
+    await loadFirebase();
+    alert("Could not save the absence.");
+  }
+}
+
+async function deleteAbsence(id) {
+  if (!confirm("Delete this absence plan?")) return;
+
+  delete STATE.absences[id];
+
+  renderEverything();
+  renderCalendar();
+
+  try {
+    await firebaseDelete(
+      "absences/" + encodeURIComponent(id)
+    );
+  } catch (error) {
+    console.error(error);
+    await loadFirebase();
+  }
+}
+
+function renderUpcomingAbsences() {
+  const container =
+    document.getElementById("upcomingAbsences");
+
+  const today = todayKey();
+
+  const upcoming = absenceRecords()
+    .filter(a => a.end >= today)
+    .sort((a,b) => (a.start || "").localeCompare(b.start || ""))
+    .slice(0,5);
+
+  if (!upcoming.length) {
+    container.innerHTML = `
+      <div class="muted tiny">
+        No upcoming absences planned.
+        Add them in the calendar.
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = upcoming.map(a => `
+    <div class="note">
+      <div class="note-text">
+        ✈️ <strong>${escapeHtml(a.person)}</strong>
+      </div>
+
+      <div class="note-meta">
+        <span>
+          ${escapeHtml(formatAbsenceRange(a))}
+          ${
+            a.note
+            ? " · " + escapeHtml(a.note)
+            : ""
+          }
+        </span>
+      </div>
+    </div>
+  `).join("");
+}
+
+
+/* =========================================================
+   TALLY
+   ========================================================= */
+
+function renderTally() {
+  const container = document.getElementById("tally");
+
+  const totals = {};
+
+  PEOPLE.forEach(p => {
+    totals[p] = 0;
+  });
+
+  const currentMonday = mondayOf(new Date());
+
+  for (let i = 0; i < 8; i++) {
+    const monday = addDays(currentMonday, -7 * i);
+    const key = weekKey(monday);
+    const assignments = weekAssignments(monday);
+
+    TASKS.forEach(task => {
+      if (STATE.done?.[key]?.[task[0]]) {
+        const owner = assignments[task[0]];
+        totals[owner]++;
+      }
+    });
+  }
+
+  const max = Math.max(
+    1,
+    ...Object.values(totals)
+  );
+
+  container.innerHTML = PEOPLE.map(person => `
+    <div class="tally-row">
+      <strong>${escapeHtml(person)}</strong>
+
+      <div class="bar">
+        <div
+          class="bar-fill"
+          style="width:${(totals[person] / max) * 100}%"
+        ></div>
+      </div>
+
+      <strong>${totals[person]}</strong>
+    </div>
+  `).join("");
+}
+
+
+/* =========================================================
+   ROOM SETTINGS
+   ========================================================= */
+
+function openSettings() {
+  const input = document.getElementById("shareLink");
+
+  input.value = location.href;
+
+  document
+    .getElementById("settingsModal")
+    .classList.add("open");
+}
+
+async function copyShareLink() {
+  const input = document.getElementById("shareLink");
+
+  try {
+    await navigator.clipboard.writeText(input.value);
+    alert("Household link copied.");
+  } catch {
+    input.select();
+    document.execCommand("copy");
+    alert("Household link copied.");
+  }
+}
+
+function resetLocalRoom() {
+  const yes = confirm(
+    "This will remove this household room from this device. " +
+    "The Firebase data itself will NOT be deleted. Continue?"
+  );
+
+  if (!yes) return;
+
+  localStorage.removeItem(
+    "household_cleaning_config"
+  );
+
+  location.hash = "";
+
+  location.reload();
+}
+
+
+/* =========================================================
+   UTILITIES
+   ========================================================= */
+
+function formatTimestamp(timestamp) {
+  if (!timestamp) return "";
+
+  const date = new Date(timestamp);
+
+  return new Intl.DateTimeFormat("en-GB", {
+    day:"2-digit",
+    month:"short",
+    hour:"2-digit",
+    minute:"2-digit"
+  }).format(date);
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+async function choosePerson(question) {
+  const answer = prompt(
+    question +
+    "\n\nType one of:\nBella\nMelody\nLohans"
+  );
+
+  if (!answer) return null;
+
+  const cleaned = answer.trim().toLowerCase();
+
+  return PEOPLE.find(
+    p => p.toLowerCase() === cleaned
+  ) || null;
+}
+
+
+/* =========================================================
+   CLOSE MODALS BY CLICKING OUTSIDE
+   ========================================================= */
+
+document.addEventListener("click", event => {
+  if (event.target.classList.contains("modal-backdrop")) {
+    event.target.classList.remove("open");
+  }
+});
+
+
+/* =========================================================
+   KEYBOARD ESC
+   ========================================================= */
+
+document.addEventListener("keydown", event => {
+  if (event.key !== "Escape") return;
+
+  document
+    .querySelectorAll(".modal-backdrop.open")
+    .forEach(modal => modal.classList.remove("open"));
+});
+</script>
+
+</body>
+</html>
